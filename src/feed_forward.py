@@ -9,7 +9,7 @@ activation_funcs = {
     "tanh": tanh
 }
 
-class FeedForward(nn):
+class FeedForward(NeuNet):
 
     def __init__(self):
         super().__init__()

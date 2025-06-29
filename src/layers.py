@@ -6,6 +6,9 @@ import logging
 from time import time
 import pandas as pd
 from src.utils.parameters_init import xavier_init
+from typing import Literal
+
+ActivationType = Literal["relu", "sigmoid", "tanh"]
 
 class NeuNet():
 
@@ -13,19 +16,21 @@ class NeuNet():
         self.layers = []
         self.activations_layers = []
     
-    def input_layer(self, tr_data):
-        self.layers.append(np.zeros(tr_data.shape(0)))
+    def input_layer(self, tr_data: np.ndarray):
+        self.layers.append(np.zeros(tr_data.shape[0]))
 
-    def add_hidden_layer(self, neurons, activation):
+    def add_hidden_layer(self, neurons: int, activation: ActivationType):
         self.layers.append(np.zeros(neurons))
         self.activations_layers.append(activation)
     
-    def output_layer(self):
-        self.layers.append(np.zeros(1))
+    def output_layer(self, neurons: int, activation: ActivationType):
+        self.layers.append(np.zeros(neurons))
+        self.activations_layers.append(activation)
     
     def initialize_weights(self):
-        self.shape = [(self.layers[i].shape[0], self.layers[i+1].shape[0]) for i in range(len(self.layers)-1)]
+        self.shape = [(self.layers[i+1].shape[0], self.layers[i].shape[0]) for i in range(len(self.layers)-1)]
         self.weights = [xavier_init(i) for i in self.shape]
-        self.biases = [xavier_init((i[1],)) for i in self.shape]
+        self.biases = [xavier_init((i[0],)) for i in self.shape]
+        
     
     # def feed_forward(self):

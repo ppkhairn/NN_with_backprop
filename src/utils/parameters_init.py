@@ -1,6 +1,6 @@
 import numpy as np
 
-def xavier_init(shape):
+def xavier_init(shape: tuple) -> np.ndarray:
     if not isinstance(shape, tuple):
         raise TypeError(f"Shape must be a tuple, got {type(shape)}: {shape}")
     if len(shape) == 1:
@@ -14,7 +14,7 @@ def xavier_init(shape):
     
     return np.random.uniform(-limit, limit, size=shape)
 
-def he_init(shape):
+def he_init(shape: tuple) -> np.ndarray:
     if not isinstance(shape, tuple):
         raise TypeError(f"Shape must be a tuple, got {type(shape)}: {shape}")
     if len(shape) == 1:
