@@ -7,18 +7,18 @@ from time import time
 import pandas as pd
 from src.utils.parameters_init import xavier_init
 
-class nn():
+class NeuNet():
 
     def __init__(self):
         self.layers = []
-        self.actications_layers = []
+        self.activations_layers = []
     
     def input_layer(self, tr_data):
         self.layers.append(np.zeros(tr_data.shape(0)))
 
     def add_hidden_layer(self, neurons, activation):
         self.layers.append(np.zeros(neurons))
-        self.actications_layers.append(activation)
+        self.activations_layers.append(activation)
     
     def output_layer(self):
         self.layers.append(np.zeros(1))
