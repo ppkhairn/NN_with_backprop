@@ -1,6 +1,6 @@
 import pytest
 import numpy as np
-from src.layers import NeuNet
+from src.core.layers import NeuNet
 
 @pytest.fixture
 def nn() -> NeuNet:

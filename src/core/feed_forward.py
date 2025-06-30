@@ -1,7 +1,7 @@
 import os
 import numpy as np
-from layers import NeuNet
-from utils.activations import sigmoid, relu, tanh
+from src.core.layers import NeuNet
+from src.utils.activations import sigmoid, relu, tanh
 
 activation_funcs = {
     "sigmoid": sigmoid,

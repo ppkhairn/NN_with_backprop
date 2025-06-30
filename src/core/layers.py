@@ -15,9 +15,10 @@ class NeuNet():
     def __init__(self):
         self.layers = []
         self.activations_layers = []
+        # self.labels = labels
     
     def input_layer(self, tr_data: np.ndarray):
-        self.layers.append(np.zeros(tr_data.shape[0]))
+        self.layers.append(np.array(tr_data))
 
     def add_hidden_layer(self, neurons: int, activation: ActivationType):
         self.layers.append(np.zeros(neurons))
@@ -33,4 +34,3 @@ class NeuNet():
         self.biases = [xavier_init((i[0],)) for i in self.shape]
         
     
-    # def feed_forward(self):
