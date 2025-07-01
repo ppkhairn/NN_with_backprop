@@ -23,9 +23,9 @@ def test_ff(feed_forward):
     feed_forward.weights.append(np.ones((1, 2)))
 
     feed_forward.biases = []
-    feed_forward.biases.append(np.array([1, 2]))
-    feed_forward.biases.append(np.array([2, 3]))
-    feed_forward.biases.append(np.array([4]))
+    feed_forward.biases.append(np.array([[1, 2]]).T)
+    feed_forward.biases.append(np.array([[2, 3]]).T)
+    feed_forward.biases.append(np.array([[4]]).T)
 
     feed_forward.forward_pass()
 

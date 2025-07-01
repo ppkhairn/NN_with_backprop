@@ -15,7 +15,7 @@ def test_nn_arch(nn):
 
     assert len(nn.layers) == 4
     assert (nn.layers[0].shape, nn.layers[1].shape, 
-            nn.layers[2].shape, nn.layers[3].shape) == ((3,), (2,), (2,), (1,))
+            nn.layers[2].shape, nn.layers[3].shape) == ((3,1), (2,1), (2,1), (1,1))
     
 def test_parameters(nn):
     tr_Data = np.array([1, 2, 3])
@@ -31,4 +31,4 @@ def test_parameters(nn):
             nn.weights[2].shape) == ((2, 3), (2, 2), (1, 2))
     assert (nn.biases[0].shape,
             nn.biases[1].shape,
-            nn.biases[2].shape) == ((2,), (2,), (1,))
+            nn.biases[2].shape) == ((2,1), (2,1), (1,1))

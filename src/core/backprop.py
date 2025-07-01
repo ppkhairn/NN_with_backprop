@@ -23,7 +23,7 @@ class BackProp(FeedForward):
         self.del_final = diff_sigmoid(self.layers[-1]) * diff_binary_cross_entropy(self.layers[-1], label)
         self.deltas.append(self.del_final)
         for i in range(len(self.layers)-1, 1, -1):
-            self.deltas.append((self.weights[i-1] @ self.deltas[-1].reshape(1, self.del_final.shape[0])) * diff_sigmoid(self.layers[i-1]))
+            self.deltas.append((self.weights[i-1] @ self.deltas[-1].T) * diff_sigmoid(self.layers[i-1]))
         self.deltas = self.deltas[::-1]
 
 

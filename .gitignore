@@ -1,6 +1,6 @@
 .env
 useful_cmds.txt
-experiments/
+
 .python-version
 
 *.log
