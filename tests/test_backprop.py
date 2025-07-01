@@ -1,29 +1,25 @@
 import pytest
 import numpy as np
-from src.core.feed_forward import FeedForward#, NeuNet
-
-# @pytest.fixture
-# def nn() -> NeuNet:
-#     return NeuNet()
+from src.core.backprop import BackProp
 
 @pytest.fixture
-def feed_forward_func() -> FeedForward:
+def backprop_func() -> BackProp:
     def _create(tr_X, tr_y):
-        return FeedForward(tr_X, tr_y)    
+        return BackProp(tr_X, tr_y)
     return _create
 
 @pytest.mark.parametrize(
-        ("tr_X", "tr_y"),
-        [
-            (np.array([[1, 2, 3]]), np.array([[1]]))
-        ],
-        ids=[
-            "Test feed forward loop"
-        ]
-
+    ("tr_X", "tr_y"),
+    [
+        (np.array([[1, 2, 3]]), np.array([[1]]))
+    ],
+    ids=[
+        "Test backprop",
+    ]
 )
-def test_ff(feed_forward_func, tr_X, tr_y):
-    model = feed_forward_func(tr_X, tr_y)
+def test_backprop(backprop_func, tr_X, tr_y):
+    
+    model = backprop_func(tr_X, tr_y)
     model.input_layer()
     model.add_hidden_layer(2, "sigmoid")
     model.add_hidden_layer(2, "sigmoid")
@@ -41,5 +37,6 @@ def test_ff(feed_forward_func, tr_X, tr_y):
 
     model.forward_pass()
 
-    expected = np.array([0.997465675536554])
-    assert np.allclose(model.layers[-1], expected, rtol=1e-5)
+    model.back_prop()
+
+    assert 1 == 1

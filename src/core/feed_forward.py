@@ -11,8 +11,8 @@ activation_funcs = {
 
 class FeedForward(NeuNet):
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, tr_X, tr_y):
+        super().__init__(tr_X, tr_y)
 
     def forward_pass(self):
         
