@@ -9,15 +9,15 @@ def backprop_func() -> BackProp:
     return _create
 
 @pytest.mark.parametrize(
-    ("tr_X", "tr_y"),
+    ("tr_X", "tr_y", "learning_rate"),
     [
-        (np.array([[1, 2, 3]]), np.array([[1]]))
+        (np.array([[1, 2, 3]]), np.array([[1]]), 0.01)
     ],
     ids=[
         "Test backprop",
     ]
 )
-def test_backprop(backprop_func, tr_X, tr_y):
+def test_backprop(backprop_func, tr_X, tr_y, learning_rate):
     
     model = backprop_func(tr_X, tr_y)
     model.input_layer()
@@ -26,17 +26,21 @@ def test_backprop(backprop_func, tr_X, tr_y):
     model.output_layer(1, "sigmoid")
 
     model.weights = []
-    model.weights.append(np.ones((model.layers[1].shape[0], model.layers[0].shape[0])))
-    model.weights.append(np.ones((model.layers[2].shape[0], model.layers[1].shape[0])))
-    model.weights.append(np.ones((model.layers[3].shape[0], model.layers[2].shape[0])))
+    model.weights.append(np.ones((model.layers[1].shape[0], model.layers[0].shape[0]), dtype=np.float64))
+    model.weights.append(np.ones((model.layers[2].shape[0], model.layers[1].shape[0]), dtype=np.float64))
+    model.weights.append(np.ones((model.layers[3].shape[0], model.layers[2].shape[0]), dtype=np.float64))
 
     model.biases = []
-    model.biases.append(np.array([[1, 2, 3]]).T)
-    model.biases.append(np.array([[2, 3]]).T)
-    model.biases.append(np.array([[4]]).T)
+    model.biases.append(np.array([[1, 2, 3]], dtype=np.float64).T)
+    model.biases.append(np.array([[2, 3]], dtype=np.float64).T) #, dtype=np.float64
+    model.biases.append(np.array([[4]], dtype=np.float64).T)
 
     model.forward_pass()
 
     model.back_prop()
 
-    assert 1 == 1
+    weights, biases = model.update_parameters(learning_rate)
+
+    assert np.allclose(weights[-1], np.array([[1.00002479, 1.00002489]]))
+    assert np.allclose(biases[-1], np.array([[4.00002495]]))
+

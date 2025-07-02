@@ -24,11 +24,11 @@ class NeuNet():
         self.layers.append(self.tr_data.reshape(self.tr_data.shape[1],1))
 
     def add_hidden_layer(self, neurons: int, activation: ActivationType):
-        self.layers.append(np.zeros((neurons,1)))
+        self.layers.append(np.zeros((neurons,1), dtype=np.float64))
         self.activations_layers.append(activation)
     
     def output_layer(self, neurons: int, activation: ActivationType):
-        self.layers.append(np.zeros((neurons,1)))
+        self.layers.append(np.zeros((neurons,1), dtype=np.float64))
         self.activations_layers.append(activation)
     
     def initialize_weights(self):

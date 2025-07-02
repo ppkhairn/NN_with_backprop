@@ -41,6 +41,12 @@ class BackProp(FeedForward):
             self.diff_losses_biases.append(der_b)
         
         return self.diff_losses_weights, self.diff_losses_biases
+    
+    def update_parameters(self, learning_rate):
+        for i in range(len(self.weights)):
+            self.weights[i] -= learning_rate * self.diff_losses_weights[i]
+            self.biases[i] -= learning_rate * self.diff_losses_biases[i]
+        return self.weights, self.biases
 
     # def derivatives_(self):
     #     for i in range(len(self.deltas)):
