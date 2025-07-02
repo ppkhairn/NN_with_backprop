@@ -34,9 +34,10 @@ class BackProp(FeedForward):
             self.deltas.append((self.weights[i-1].T @ self.deltas[-1]) * diff_sigmoid(self.layers[i-1]))
         self.deltas = self.deltas[::-1]
         for i in range(len(self.deltas)):
-            der_w = self.layers[i] @ self.deltas[i].T
+            # der_w = self.layers[i] @ self.deltas[i].T
+            der_w = self.deltas[i] @ self.layers[i].T
             self.diff_losses_weights.append(der_w)
-            der_b = self.deltas[i].T
+            der_b = self.deltas[i]
             self.diff_losses_biases.append(der_b)
         
         return self.diff_losses_weights, self.diff_losses_biases
