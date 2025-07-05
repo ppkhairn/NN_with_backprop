@@ -2,10 +2,11 @@ import pytest
 import numpy as np
 from src.core.layers import NeuNet
 
-# @pytest.fixture
-# def nn(request) -> NeuNet:
-#     tr_X, tr_y = request.param
-#     return NeuNet(tr_X, tr_y)
+@pytest.fixture
+def nn() -> NeuNet:
+    def _create(tr_X, tr_y):
+        return NeuNet(tr_X, tr_y)
+    return _create
 
 
 @pytest.mark.parametrize(
@@ -13,15 +14,14 @@ from src.core.layers import NeuNet
         [
             (np.array([[1, 2, 3]]), np.array([[1]]))
         ],
-        # indirect=True, # Because we want pytest to pass the test parameters ((tr_X, tr_y)) to the fixture, not to the test function directly.
         ids=[
             "Test NN architecture"
         ]
 
 )
 
-def test_nn_arch(tr_X, tr_y):
-    model = NeuNet(tr_X, tr_y)
+def test_nn_arch(nn, tr_X, tr_y):
+    model = nn(tr_X, tr_y)
     model.input_layer()
     model.add_hidden_layer(2, "sigmoid")
     model.add_hidden_layer(2, "sigmoid")
@@ -31,21 +31,19 @@ def test_nn_arch(tr_X, tr_y):
     assert (model.layers[0].shape, model.layers[1].shape, 
             model.layers[2].shape, model.layers[3].shape) == ((3,1), (2,1), (2,1), (1,1))
     
-
 @pytest.mark.parametrize(
         ("tr_X", "tr_y"),
         [
             (np.array([[1, 2, 3]]), np.array([[1]]))
         ],
-        # indirect=True, # Because we want pytest to pass the test parameters ((tr_X, tr_y)) to the fixture, not to the test function directly.
         ids=[
-            "Test NN Parameters"
+            "Test NN parameters"
         ]
 
 )
     
-def test_parameters(tr_X, tr_y):
-    model = NeuNet(tr_X, tr_y)
+def test_parameters(nn, tr_X, tr_y):
+    model = nn(tr_X, tr_y)
     model.input_layer()
     model.add_hidden_layer(2, "sigmoid")
     model.add_hidden_layer(2, "sigmoid")

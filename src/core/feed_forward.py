@@ -9,14 +9,16 @@ activation_funcs = {
     "tanh": tanh
 }
 
-class FeedForward(NeuNet):
+class FeedForward():
 
-    def __init__(self, tr_X, tr_y):
-        super().__init__(tr_X, tr_y)
+    def __init__(self, net: NeuNet):
+        self.net = net
 
-    def forward_pass(self):
+    def forward_pass(self) -> None:
         
-        for i in range(len(self.layers)-1):
-            self.layers[i+1] = self.weights[i] @ self.layers[i] + self.biases[i]
-            ac_func = activation_funcs[self.activations_layers[i]]
-            self.layers[i+1] = ac_func(self.layers[i+1])
+        for i in range(len(self.net.layers)-1):
+            self.net.layers[i+1] = self.net.weights[i] @ self.net.layers[i] + self.net.biases[i]
+            ac_func = activation_funcs[self.net.activations_layers[i]]
+            self.net.layers[i+1] = ac_func(self.net.layers[i+1])
+            
+            

@@ -12,26 +12,27 @@ ActivationType = Literal["relu", "sigmoid", "tanh"]
 
 class NeuNet():
 
-    def __init__(self, tr_X: np.ndarray, tr_y:np.ndarray):
+    def __init__(self, tr_X, tr_y):
         self.layers = []
         self.activations_layers = []
         self.tr_data = tr_X
         self.label = tr_y
+
+        # self.labels = labels
     
-    def input_layer(self) -> None:
+    def input_layer(self):
         self.layers.append(self.tr_data.reshape(self.tr_data.shape[1],1))
 
-    def add_hidden_layer(self, neurons: int, activation: ActivationType) -> None:
+    def add_hidden_layer(self, neurons: int, activation: ActivationType):
         self.layers.append(np.zeros((neurons,1), dtype=np.float64))
         self.activations_layers.append(activation)
     
-    def output_layer(self, neurons: int, activation: ActivationType) -> None:
+    def output_layer(self, neurons: int, activation: ActivationType):
         self.layers.append(np.zeros((neurons,1), dtype=np.float64))
         self.activations_layers.append(activation)
     
-    def initialize_weights(self) -> None:
+    def initialize_weights(self):
         self.shape = [(self.layers[i+1].shape[0], self.layers[i].shape[0]) for i in range(len(self.layers)-1)]
         self.weights = [xavier_init(i) for i in self.shape]
         self.biases = [xavier_init((i[0],1)) for i in self.shape]
         
-    

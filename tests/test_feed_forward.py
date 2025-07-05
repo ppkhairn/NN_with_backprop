@@ -1,16 +1,7 @@
 import pytest
 import numpy as np
 from src.core.feed_forward import FeedForward#, NeuNet
-
-# @pytest.fixture
-# def nn() -> NeuNet:
-#     return NeuNet()
-
-@pytest.fixture
-def feed_forward_func() -> FeedForward:
-    def _create(tr_X, tr_y):
-        return FeedForward(tr_X, tr_y)    
-    return _create
+from src.core.layers import NeuNet
 
 @pytest.mark.parametrize(
         ("tr_X", "tr_y"),
@@ -22,24 +13,25 @@ def feed_forward_func() -> FeedForward:
         ]
 
 )
-def test_ff(feed_forward_func, tr_X, tr_y):
-    model = feed_forward_func(tr_X, tr_y)
-    model.input_layer()
-    model.add_hidden_layer(3, "sigmoid")
-    model.add_hidden_layer(2, "sigmoid")
-    model.output_layer(1, "sigmoid")
+def test_ff(tr_X, tr_y):
+    net = NeuNet(tr_X, tr_y)
+    net.input_layer()
+    net.add_hidden_layer(3, "sigmoid")
+    net.add_hidden_layer(2, "sigmoid")
+    net.output_layer(1, "sigmoid")
 
-    model.weights = []
-    model.weights.append(np.ones((model.layers[1].shape[0], model.layers[0].shape[0])))
-    model.weights.append(np.ones((model.layers[2].shape[0], model.layers[1].shape[0])))
-    model.weights.append(np.ones((model.layers[3].shape[0], model.layers[2].shape[0])))
+    net.weights = []
+    net.weights.append(np.ones((net.layers[1].shape[0], net.layers[0].shape[0])))
+    net.weights.append(np.ones((net.layers[2].shape[0], net.layers[1].shape[0])))
+    net.weights.append(np.ones((net.layers[3].shape[0], net.layers[2].shape[0])))
 
-    model.biases = []
-    model.biases.append(np.array([[1, 2, 3]]).T)
-    model.biases.append(np.array([[2, 3]]).T)
-    model.biases.append(np.array([[4]]).T)
+    net.biases = []
+    net.biases.append(np.array([[1, 2, 3]]).T)
+    net.biases.append(np.array([[2, 3]]).T)
+    net.biases.append(np.array([[4]]).T)
 
+    model = FeedForward(net)
     model.forward_pass()
 
     expected = np.array([0.99750464]) #0.99750464
-    assert np.allclose(model.layers[-1], expected, rtol=1e-5)
+    assert np.allclose(net.layers[-1], expected, rtol=1e-5)

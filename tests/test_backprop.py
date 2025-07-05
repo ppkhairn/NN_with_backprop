@@ -1,46 +1,52 @@
 import pytest
 import numpy as np
 from src.core.backprop import BackProp
-
-@pytest.fixture
-def backprop_func() -> BackProp:
-    def _create(tr_X, tr_y):
-        return BackProp(tr_X, tr_y)
-    return _create
+from src.core.layers import NeuNet
+from src.core.feed_forward import FeedForward
+from src.utils.loss_functions import binary_cross_entropy, mean_squared_error
 
 @pytest.mark.parametrize(
-    ("tr_X", "tr_y", "learning_rate"),
+    ("tr_X", "tr_y", "learning_rate", "loss_function"),
     [
-        (np.array([[1, 2, 3]]), np.array([[1]]), 0.01)
+        (np.array([[1, 2, 3]]), np.array([[1]]), 0.01, "binary_cross_entropy"), 
+        (np.array([[1, 2, 3]]), np.array([[1]]), 0.01, "mean_squared_error")
     ],
     ids=[
-        "Test backprop",
+        "Test backprop", "with mse"
     ]
 )
-def test_backprop(backprop_func, tr_X, tr_y, learning_rate):
+def test_backprop(tr_X, tr_y, learning_rate, loss_function):
     
-    model = backprop_func(tr_X, tr_y)
-    model.input_layer()
-    model.add_hidden_layer(3, "sigmoid")
-    model.add_hidden_layer(2, "sigmoid")
-    model.output_layer(1, "sigmoid")
+    net = NeuNet(tr_X, tr_y)
+    net.input_layer()
+    net.add_hidden_layer(3, "sigmoid")
+    net.add_hidden_layer(2, "sigmoid")
+    net.output_layer(1, "sigmoid")
 
-    model.weights = []
-    model.weights.append(np.ones((model.layers[1].shape[0], model.layers[0].shape[0]), dtype=np.float64))
-    model.weights.append(np.ones((model.layers[2].shape[0], model.layers[1].shape[0]), dtype=np.float64))
-    model.weights.append(np.ones((model.layers[3].shape[0], model.layers[2].shape[0]), dtype=np.float64))
+    net.weights = []
+    net.weights.append(np.ones((net.layers[1].shape[0], net.layers[0].shape[0]), dtype=np.float64))
+    net.weights.append(np.ones((net.layers[2].shape[0], net.layers[1].shape[0]), dtype=np.float64))
+    net.weights.append(np.ones((net.layers[3].shape[0], net.layers[2].shape[0]), dtype=np.float64))
 
-    model.biases = []
-    model.biases.append(np.array([[1, 2, 3]], dtype=np.float64).T)
-    model.biases.append(np.array([[2, 3]], dtype=np.float64).T) #, dtype=np.float64
-    model.biases.append(np.array([[4]], dtype=np.float64).T)
+    net.biases = []
+    net.biases.append(np.array([[1, 2, 3]], dtype=np.float64).T)
+    net.biases.append(np.array([[2, 3]], dtype=np.float64).T) #, dtype=np.float64
+    net.biases.append(np.array([[4]], dtype=np.float64).T)
 
-    model.forward_pass()
+    ff = FeedForward(net)
+    ff.forward_pass()
 
-    model.back_prop()
+    bp = BackProp(ff, learning_rate, loss_function)
+    # bp.back_prop()
+    # weights, biases = bp.update_parameters()
 
-    weights, biases = model.update_parameters(learning_rate)
-
-    assert np.allclose(weights[-1], np.array([[1.00002479, 1.00002489]]))
-    assert np.allclose(biases[-1], np.array([[4.00002495]]))
-
+    if loss_function == "binary_cross_entropy":
+        bp.back_prop()
+        weights, biases = bp.update_parameters()
+        assert np.allclose(weights[-1], np.array([[1.00002479, 1.00002489]]))
+        assert np.allclose(biases[-1], np.array([[4.00002495]]))
+    
+    elif loss_function == "mean_squared_error":
+        # Expect NotImplementedError for this loss
+        with pytest.raises(NotImplementedError):
+            bp.back_prop()
