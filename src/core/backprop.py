@@ -39,7 +39,7 @@ class BackProp():
             # Special case: when using sigmoid activation + binary cross-entropy loss,
             # the gradient simplifies to (y_pred - y_true)
             # Look at the docs for this special case
-            self.del_final = self.ff.net.layers[-1] - self.ff.net.label.reshape(self.ff.net.label.shape[1],1) 
+            self.del_final = self.ff.net.layers[-1] - self.ff.net.label[0].reshape(self.ff.net.label.shape[1],1) 
         else: 
             #Example - self.del_final = diff_sigmoid(self.ff.net.layers[-1]) * diff_binary_cross_entropy(self.ff.net.layers[-1], self.ff.net.label.reshape(self.ff.net.label.shape[1],1))
 

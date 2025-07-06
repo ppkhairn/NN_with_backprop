@@ -12,14 +12,15 @@ class Learner(BackProp):
         self.bp = backprop
         self.epoch = epoch
 
-    def calculate_avg_loss(self) -> float:
+    def calculate_loss(self, predicted_sample, actual_sample) -> float:
         list_loss = []
-        for i in range(len(self.bp.ff.net.tr_data)):
-            _loss = binary_cross_entropy(self.bp.ff.net.tr_data[i], self.bp.ff.net.label[i])
-            list_loss.append(_loss)
-        avg_loss = sum(list_loss) / len(list_loss)
+        # for i in range(len(self.bp.ff.net.layers[-1])):
+        # _loss = binary_cross_entropy(self.bp.ff.net.layers[-1], self.bp.ff.net.label[0])
+        _loss = binary_cross_entropy(predicted_sample, actual_sample)
+            # list_loss.append(_loss)
+        # avg_loss = sum(list_loss) / len(list_loss)
 
-        return avg_loss
+        return _loss
     
     def train(self):
         loss_epoch_avg = []
@@ -30,7 +31,11 @@ class Learner(BackProp):
                 self.bp.ff.forward_pass()
                 self.bp.back_prop()
                 self.bp.update_parameters()
-                loss_epoch.append(self.calculate_avg_loss())
+                reshaped_label = self.bp.ff.net.label[j].reshape(self.bp.ff.net.label.shape[1], 1)
+                loss_epoch.append(self.calculate_loss(self.bp.ff.net.layers[-1], reshaped_label))
+
+                # Update input layer
+                self.bp.ff.net.layers[0] = self.bp.ff.net.tr_data[j+1]
             loss_epoch_avg.append(sum(loss_epoch) / len(loss_epoch))
         
         return loss_epoch_avg
