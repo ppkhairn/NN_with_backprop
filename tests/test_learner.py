@@ -20,7 +20,7 @@ rand_df = df_random(pd.read_csv(str(data_folder)+"/binary_classification_data.cs
 @pytest.mark.parametrize(
     ("tr_data"),
     [
-        rand_df.head(6)
+        rand_df.head(50)
     ],
     ids=[
         "Test learner"
@@ -41,8 +41,8 @@ def test_learner(tr_data):
     net.initialize_weights()
 
     ff = FeedForward(net)
-    bp = BackProp(forward_pass=ff, learning_rate=0.1, loss_function="binary_cross_entropy")
-    epoch = 5
+    bp = BackProp(forward_pass=ff, learning_rate=0.001, loss_function="binary_cross_entropy")
+    epoch = 200
     tr = Learner(backprop=bp, epoch=epoch)
     loss = tr.train()
 

@@ -27,11 +27,11 @@ class BackProp():
         self.loss_function = loss_function
 
     def back_prop(self) -> Tuple[List[np.ndarray], List[np.ndarray]]:
-        self.deltas_ = [np.zeros_like(s) for s in self.ff.net.layers]
-        del self.deltas_[0]
+        # self.deltas_ = [np.zeros_like(s) for s in self.ff.net.layers]
+        # del self.deltas_[0]
         self.deltas = []
-        self.diff_losses_weights_ = [np.zeros_like(s) for s in self.ff.net.weights]
-        self.diff_losses_biases_ = [np.zeros_like(s) for s in self.ff.net.biases]
+        # self.diff_losses_weights_ = [np.zeros_like(s) for s in self.ff.net.weights]
+        # self.diff_losses_biases_ = [np.zeros_like(s) for s in self.ff.net.biases]
         self.diff_losses_weights = []
         self.diff_losses_biases = []
 

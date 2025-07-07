@@ -34,7 +34,8 @@ class Learner(BackProp):
             for j in range(len(self.bp.ff.net.tr_data)-1):
 
                 self.bp.ff.forward_pass()
-                self.bp.back_prop()
+                d_w, d_b = self.bp.back_prop()
+                # logging.info(np.linalg.norm(d_w[-1]))
                 self.bp.update_parameters()
                 reshaped_label = self.bp.ff.net.label[j].reshape(self.bp.ff.net.label.shape[1], 1)
                 loss_epoch.append(self.calculate_loss(self.bp.ff.net.layers[-1], reshaped_label))
@@ -58,5 +59,18 @@ class Learner(BackProp):
         plt.show()
 
         return None
+    
+    def binary_classification_accuracy(self, test_X, test_y):
+
+        for i in len(self.bp.ff.net.tr_data):
+            self.bp.ff.net = self.bp.ff.net(test_X, test_y)
+            self.bp.ff.forward_pass()
+            if self.bp.ff.net.layers[-1] <= 0.5:
+                pred = 0
+            else: 
+                pred = 1
+            
+            return None
+
 
     
