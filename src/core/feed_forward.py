@@ -1,4 +1,3 @@
-import os
 import numpy as np
 from src.core.layers import NeuNet
 from src.utils.activations import sigmoid, relu, tanh
@@ -14,8 +13,9 @@ class FeedForward():
     def __init__(self, net: NeuNet):
         self.net = net
 
-    def forward_pass(self) -> None:
+    def forward_pass(self, data_sample: np.ndarray = None) -> None:
         
+        self.net.layers[0] = data_sample.reshape(self.net.tr_data.shape[1],1)
         for i in range(len(self.net.layers)-1):
             if self.net.layers[i].ndim != 2:
                 self.net.layers[i] = self.net.layers[i].reshape(self.net.tr_data.shape[1], 1)

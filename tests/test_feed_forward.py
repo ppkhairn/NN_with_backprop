@@ -31,7 +31,7 @@ def test_ff(tr_X, tr_y):
     net.biases.append(np.array([[4]]).T)
 
     model = FeedForward(net)
-    model.forward_pass()
+    model.forward_pass(tr_X[0])
 
     expected = np.array([0.99750464]) #0.99750464
     assert np.allclose(net.layers[-1], expected, rtol=1e-5)

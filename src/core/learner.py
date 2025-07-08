@@ -1,4 +1,3 @@
-import os
 import numpy as np
 from src.core.backprop import BackProp
 from src.utils.activations import sigmoid, relu, tanh
@@ -31,17 +30,17 @@ class Learner(BackProp):
         self.loss_epoch_avg = []
         for i in range(self.epoch):
             loss_epoch = []
-            for j in range(len(self.bp.ff.net.tr_data)-1):
+            for j in range(len(self.bp.ff.net.tr_data)):
 
-                self.bp.ff.forward_pass()
+                self.bp.ff.forward_pass(self.bp.ff.net.tr_data[j])
                 d_w, d_b = self.bp.back_prop()
                 # logging.info(np.linalg.norm(d_w[-1]))
                 self.bp.update_parameters()
                 reshaped_label = self.bp.ff.net.label[j].reshape(self.bp.ff.net.label.shape[1], 1)
                 loss_epoch.append(self.calculate_loss(self.bp.ff.net.layers[-1], reshaped_label))
 
-                # Update input layer
-                self.bp.ff.net.layers[0] = self.bp.ff.net.tr_data[j+1]
+                # # Update input layer
+                # self.bp.ff.net.layers[0] = self.bp.ff.net.tr_data[j+1]
             self.loss_epoch_avg.append(sum(loss_epoch) / len(loss_epoch))
             logging.info(f"Loss - {sum(loss_epoch) / len(loss_epoch)}")
             logging.info(f"Epoch: {str(i)} - Average Loss: {self.loss_epoch_avg[-1]}")
@@ -60,17 +59,20 @@ class Learner(BackProp):
 
         return None
     
-    def binary_classification_accuracy(self, test_X, test_y):
-
-        for i in len(self.bp.ff.net.tr_data):
-            self.bp.ff.net = self.bp.ff.net(test_X, test_y)
-            self.bp.ff.forward_pass()
-            if self.bp.ff.net.layers[-1] <= 0.5:
-                pred = 0
+    def binary_classification_accuracy(self, test_data: np.ndarray, test_label: np.ndarray) -> np.float64:
+        preds = []
+        for i in range(test_data.shape[0]):
+            # self.bp.ff.net = self.bp.ff.net(test_X, test_y)
+            self.bp.ff.forward_pass(test_data[i].reshape(test_data.shape[1], 1))
+            if self.bp.ff.net.layers[-1] < 0.5:
+                preds.append(0)
             else: 
-                pred = 1
-            
-            return None
+                preds.append(1)
+        preds_arr = np.array(preds)
+        if test_label.ndim > 1:
+            test_label = test_label.reshape(test_label.shape[0],)
+        
+        return sum(test_label == preds_arr) / len(test_label)
 
 
     

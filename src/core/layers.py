@@ -19,7 +19,8 @@ class NeuNet():
         self.label = tr_y
     
     def input_layer(self) -> None:
-        self.layers.append(self.tr_data[0].reshape(self.tr_data.shape[1],1))
+        # self.layers.append(self.tr_data[0].reshape(self.tr_data.shape[1],1))
+        self.layers.append(np.zeros((self.tr_data.shape[1],1), dtype=np.float64))
 
     def add_hidden_layer(self, neurons: int, activation: ActivationType) -> None:
         self.layers.append(np.zeros((neurons,1), dtype=np.float64))

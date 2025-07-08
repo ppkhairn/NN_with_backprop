@@ -34,7 +34,7 @@ def test_backprop(tr_X, tr_y, learning_rate, loss_function):
     net.biases.append(np.array([[4]], dtype=np.float64).T)
 
     ff = FeedForward(net)
-    ff.forward_pass()
+    ff.forward_pass(tr_X[0])
 
     bp = BackProp(ff, learning_rate, loss_function)
     # bp.back_prop()
