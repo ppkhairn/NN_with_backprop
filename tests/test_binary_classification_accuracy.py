@@ -8,7 +8,7 @@ from src.core.backprop import BackProp
 @pytest.mark.parametrize(
         ("tr_X", "tr_y", "test_X", "test_y"),
         [
-            (np.array([[1, 2, 3]]), 
+            (np.array([[1, 2, 3, 4]]), 
              np.array([[1]]), 
              np.array([[ 2.41079286,  1.86917728,  1.54099762,  2.28200427],
                         [ 0.07202179,  0.93377948,  0.45508945, -0.06685078],
@@ -48,4 +48,4 @@ def test_binary_accuracy(tr_X, tr_y, test_X, test_y):
     acc = tr.binary_classification_accuracy(test_data=test_X, test_label=test_y)
 
 
-    assert 1==1
+    assert acc == np.float64(0.5)
