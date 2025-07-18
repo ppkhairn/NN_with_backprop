@@ -1,10 +1,10 @@
 import os
 import numpy as np
 from typing import List, Tuple, Literal
-from src.core.feed_forward import FeedForward
-from src.utils.activations import sigmoid, relu, tanh
-from src.utils.derivatives import diff_sigmoid, diff_binary_cross_entropy
-from src.utils.loss_functions import mean_squared_error, binary_cross_entropy
+from src.nn_with_backprop_pk.core.feed_forward import FeedForward
+from src.nn_with_backprop_pk.utils.activations import sigmoid, relu, tanh
+from src.nn_with_backprop_pk.utils.derivatives import diff_sigmoid, diff_binary_cross_entropy
+from src.nn_with_backprop_pk.utils.loss_functions import mean_squared_error, binary_cross_entropy
 
 activation_funcs = {
     "sigmoid": sigmoid,

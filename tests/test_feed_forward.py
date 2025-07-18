@@ -1,7 +1,7 @@
 import pytest
 import numpy as np
-from src.core.feed_forward import FeedForward#, NeuNet
-from src.core.layers import NeuNet
+from src.nn_with_backprop_pk.core.feed_forward import FeedForward#, NeuNet
+from src.nn_with_backprop_pk.core.layers import NeuNet
 
 @pytest.mark.parametrize(
         ("tr_X", "tr_y"),

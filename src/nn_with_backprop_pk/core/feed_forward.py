@@ -1,6 +1,6 @@
 import numpy as np
-from src.core.layers import NeuNet
-from src.utils.activations import sigmoid, relu, tanh
+from src.nn_with_backprop_pk.core.layers import NeuNet
+from src.nn_with_backprop_pk.utils.activations import sigmoid, relu, tanh
 
 activation_funcs = {
     "sigmoid": sigmoid,

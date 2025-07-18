@@ -5,7 +5,7 @@ import numpy as np
 import logging
 from time import time
 import pandas as pd
-from src.utils.parameters_init import xavier_init
+from src.nn_with_backprop_pk.utils.parameters_init import xavier_init
 from typing import Literal
 
 ActivationType = Literal["relu", "sigmoid", "tanh"]

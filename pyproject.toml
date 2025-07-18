@@ -1,9 +1,13 @@
 [tool.poetry]
-name = "nn with backprop"
+name = "nn-with-backprop-pk"
 version = "0.1.0"
 description = "Poetry file for the project NN with backprop"
 authors = ["ppkhairn"]
 readme = "README.md"
+packages = [
+    { include = "nn_with_backprop_pk", from = "src" }
+]
+
 
 [tool.poetry.dependencies]
 python = "^3.12"

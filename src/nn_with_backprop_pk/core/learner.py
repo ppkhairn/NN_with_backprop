@@ -1,8 +1,8 @@
 import numpy as np
-from src.core.backprop import BackProp
-from src.utils.activations import sigmoid, relu, tanh
-from src.utils.derivatives import diff_sigmoid, diff_binary_cross_entropy
-from src.utils.loss_functions import binary_cross_entropy
+from src.nn_with_backprop_pk.core.backprop import BackProp
+from src.nn_with_backprop_pk.utils.activations import sigmoid, relu, tanh
+from src.nn_with_backprop_pk.utils.derivatives import diff_sigmoid, diff_binary_cross_entropy
+from src.nn_with_backprop_pk.utils.loss_functions import binary_cross_entropy
 import matplotlib.pyplot as plt
 from tqdm import tqdm
 import logging

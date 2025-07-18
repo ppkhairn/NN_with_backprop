@@ -1,9 +1,9 @@
 import pytest
 import numpy as np
-from src.core.learner import Learner
-from src.core.layers import NeuNet
-from src.core.feed_forward import FeedForward
-from src.core.backprop import BackProp
+from src.nn_with_backprop_pk.core.learner import Learner
+from src.nn_with_backprop_pk.core.layers import NeuNet
+from src.nn_with_backprop_pk.core.feed_forward import FeedForward
+from src.nn_with_backprop_pk.core.backprop import BackProp
 
 @pytest.mark.parametrize(
         ("tr_X", "tr_y", "test_X", "test_y"),

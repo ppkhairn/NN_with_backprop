@@ -1,9 +1,9 @@
 import pytest
 import numpy as np
-from src.core.backprop import BackProp
-from src.core.layers import NeuNet
-from src.core.feed_forward import FeedForward
-from src.utils.loss_functions import binary_cross_entropy, mean_squared_error
+from src.nn_with_backprop_pk.core.backprop import BackProp
+from src.nn_with_backprop_pk.core.layers import NeuNet
+from src.nn_with_backprop_pk.core.feed_forward import FeedForward
+from src.nn_with_backprop_pk.utils.loss_functions import binary_cross_entropy, mean_squared_error
 
 @pytest.mark.parametrize(
     ("tr_X", "tr_y", "learning_rate", "loss_function"),

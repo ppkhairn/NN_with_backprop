@@ -1,6 +1,6 @@
 import pytest
 import pandas as pd
-from src.utils.data_split import train_test_split
+from src.nn_with_backprop_pk.utils.data_split import train_test_split
 from pathlib import Path
 from math import ceil
 

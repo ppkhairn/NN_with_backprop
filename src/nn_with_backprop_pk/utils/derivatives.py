@@ -1,5 +1,5 @@
 import numpy as np
-from src.utils.activations import sigmoid, tanh
+from src.nn_with_backprop_pk.utils.activations import sigmoid, tanh
 
 def diff_mse(y_pred: np.ndarray, y_actual: np.ndarray) -> np.ndarray:
     return y_pred - y_actual

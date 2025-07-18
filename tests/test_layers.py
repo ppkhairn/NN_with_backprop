@@ -1,6 +1,6 @@
 import pytest
 import numpy as np
-from src.core.layers import NeuNet
+from src.nn_with_backprop_pk.core.layers import NeuNet
 
 # @pytest.fixture
 # def nn(request) -> NeuNet:

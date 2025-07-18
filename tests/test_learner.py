@@ -2,12 +2,12 @@ import pytest
 import numpy as np
 import pandas as pd
 from pathlib import Path
-from src.core.backprop import BackProp
-from src.core.layers import NeuNet
-from src.core.feed_forward import FeedForward
-from src.core.learner import Learner
-from src.utils.loss_functions import binary_cross_entropy, mean_squared_error
-from src.utils.data_randomize import df_random
+from src.nn_with_backprop_pk.core.backprop import BackProp
+from src.nn_with_backprop_pk.core.layers import NeuNet
+from src.nn_with_backprop_pk.core.feed_forward import FeedForward
+from src.nn_with_backprop_pk.core.learner import Learner
+from src.nn_with_backprop_pk.utils.loss_functions import binary_cross_entropy, mean_squared_error
+from src.nn_with_backprop_pk.utils.data_randomize import df_random
 
 # resolve paths
 curr_script_path = Path(__file__)
