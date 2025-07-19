@@ -7,8 +7,13 @@ A lightweight implementation of a feedforward neural network built entirely from
 This project was created for learning and experimentation purposes. It includes:
 
 - Manual implementation of forward and backward propagation
-- Basic training loop
-- No frameworks — just raw `numpy`
+- A neural network implementation from scratch using only NumPy.
+- Educational, minimal design
+
+## Installation
+
+```bash
+pip install nn-with-backprop-pk
 
 ## Disclaimer
 
