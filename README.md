@@ -14,6 +14,7 @@ This project was created for learning and experimentation purposes. It includes:
 
 ```bash
 pip install nn-with-backprop-pk
+```
 
 ## Disclaimer
 
